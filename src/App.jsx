@@ -9,7 +9,7 @@ import {
   Link,
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-
+import { API_BASE_URL, API_ENDPOINTS } from "./apiconfig";
 import axios from "axios";
 import { setUser } from "./redux/authSlice";
 import UserLoginPage from "./pages/UserLoginPage";
@@ -37,13 +37,13 @@ const App = () => {
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      dispatch(setUser(JSON.parse(storedUser))); // ✅ Load from local storage
+      dispatch(setUser(JSON.parse(storedUser)));
     } else {
       const fetchUser = async () => {
         try {
           console.log(isAuthenticated);
           const response = await axios.get(
-            "http://localhost:5000/api/auth/me",
+            `${API_BASE_URL}${API_ENDPOINTS.UserMe}`,
             {
               withCredentials: true,
             }
